@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	
-	plot.clear();
+	
 	for(int i = 0; i < Cnt; i++)
 	{
 		X[i] = (double)i;
@@ -61,6 +61,7 @@ int main(int argc, char* argv[])
 		X2[i] = i;
 		Y2[i] = -100*i - 20;
 	}
+	plot.clear();
 	plot.plot(X2, Y2, Cnt/2, color);
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
