@@ -14,8 +14,11 @@ class Plot
 	private:
 	
 	void DrawAxis (IplImage *image);
+	void DrawData (IplImage *image);
 	int window_height;
 	int window_width;
+	vector< vector<CvPoint> >dataset;
+	
 
 	
 	public:

@@ -22,11 +22,38 @@ int main(int argc, char* argv[])
 	plot.plot(plot.Figure, X, Y, Cnt, color);
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
+	//plot.clear();
 	
-	plot.clear();
 	
+	//如何在一幅图中绘制多组数据？每次绘制的同时还对数据进行存储？
+	for(size_t i = 0; i < Cnt; i++)
+	{
+		X[i] = i;
+		Y[i] = 5*i - 20;
+	}
+	plot.plot(plot.Figure, X, Y, Cnt, color);
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
+	
+	for(size_t i = 0; i < Cnt; i++)
+	{
+		X[i] = i;
+		Y[i] = -5*i - 20;
+	}
+	plot.plot(plot.Figure, X, Y, Cnt, color);
+	cvShowImage("hello", plot.Figure);
+	cvWaitKey(0);
+	
+	for(int i = 0; i < Cnt; i++)
+	{
+		X[i] = i;
+		Y[i] = 20*sin(i);
+	}
+	plot.plot(plot.Figure, X, Y, Cnt, color);
+	cvShowImage("hello", plot.Figure);
+	cvWaitKey(0);
+	
+	
 	
 	return 0;
 }
