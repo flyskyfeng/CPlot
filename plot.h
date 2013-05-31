@@ -17,8 +17,9 @@ class Plot
 	void DrawData (IplImage *image);
 	int window_height;
 	int window_width;
-	vector< vector<CvPoint> >dataset;
-	
+
+//	vector< vector<CvPoint> >dataset;
+	vector< vector<CvPoint2D64f> >dataset;	
 
 	
 	public:
@@ -44,8 +45,11 @@ class Plot
 	//显示范围
 	void plot(IplImage* image, int *x, size_t Cnt, CvScalar color);
 	
-
-	void plot(IplImage* image, int *x, int *y, size_t Cnt, CvScalar color);
+	void plot(int *x, int *y, size_t Cnt, CvScalar color);
+	void plot(float *x, float *y, size_t Cnt, CvScalar color);
+	void plot(double *x, double *y, size_t Cnt, CvScalar color);
+	
+	
 	
 	void xlabel(string xlabel_name, CvScalar label_color);
 	void ylabel(string ylabel_name, CvScalar label_color);

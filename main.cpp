@@ -8,52 +8,62 @@
 int main(int argc, char* argv[])
 {
 	const int Cnt = 100;
-	int X[Cnt] = {0};
-	int Y[Cnt] = {0};
-	for(size_t i = 0; i < Cnt; i++)
+	double X[Cnt] = {0};
+	double Y[Cnt] = {0};
+	for(int i = 0; i < Cnt; i++)
 	{
-		X[i] = i;
-		Y[i] = 4*i - 20;
+		X[i] = (double)i;
+		Y[i] = (double)4*i - 20;
 	}
 	
 	cvNamedWindow("hello",1);
 	Plot plot;
 	CvScalar color = CV_RGB(255, 0, 0);
-	plot.plot(plot.Figure, X, Y, Cnt, color);
+	plot.plot(X, Y, Cnt, color);
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	//plot.clear();
 	
 	
 	//如何在一幅图中绘制多组数据？每次绘制的同时还对数据进行存储？
-	for(size_t i = 0; i < Cnt; i++)
+	for(int i = 0; i < Cnt; i++)
 	{
-		X[i] = i;
-		Y[i] = 5*i - 20;
+		X[i] = (double)i;
+		Y[i] = (double)(5*i - 20);
 	}
-	plot.plot(plot.Figure, X, Y, Cnt, color);
-	cvShowImage("hello", plot.Figure);
-	cvWaitKey(0);
-	
-	for(size_t i = 0; i < Cnt; i++)
-	{
-		X[i] = i;
-		Y[i] = -5*i - 20;
-	}
-	plot.plot(plot.Figure, X, Y, Cnt, color);
+	plot.plot(X, Y, Cnt, color);
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	
 	for(int i = 0; i < Cnt; i++)
 	{
-		X[i] = i;
-		Y[i] = 20*sin(i);
+		X[i] = (double)i;
+		Y[i] = (double)(-5*i - 20);
 	}
-	plot.plot(plot.Figure, X, Y, Cnt, color);
+	plot.plot(X, Y, Cnt, color);
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	
+	plot.clear();
+	for(int i = 0; i < Cnt; i++)
+	{
+		X[i] = (double)i;
+		Y[i] = (double)(50*sin(i*0.1));
+	}
+	plot.plot(X, Y, Cnt, color);
+	cvShowImage("hello", plot.Figure);
+	cvWaitKey(0);
 	
+	int X2[Cnt] = {0};
+	int Y2[Cnt] = {0};
+	for(int i = 0; i < Cnt; i++)
+	{
+		X2[i] = i;
+		Y2[i] = -100*i - 20;
+	}
+	plot.plot(X2, Y2, Cnt/2, color);
+	cvShowImage("hello", plot.Figure);
+	cvWaitKey(0);
 	
 	return 0;
 }
