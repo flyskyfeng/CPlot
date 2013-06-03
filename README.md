@@ -116,7 +116,7 @@ Matlab的plot函数非常的强大，进行数据显示的效果非常的好，�
 	}
 
 #显示效果
-![](https://github.com/libing64/CPlot/blob/master/plot.jpg)
+![](https://github.com/libing64/CPlot/blob/master/example.jpg)
 
 #如何自己优化
 
