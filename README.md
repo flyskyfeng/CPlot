@@ -1,10 +1,10 @@
 CPlot
 =====
-##简介
+#简介
 Matlab的plot函数非常的强大，进行数据显示的效果非常的好，但是经常使用Opencv的同学如果每次将计算之后的数据导入到Matlab里显示又比较麻烦，因此决定写一类似于plot的C函数，用于在OpenCV中进行数据显示。设计一个Plot类，项目位于github上[https://github.com/libing64/CPlot](https://github.com/libing64/CPlot "CPlot-github")
 
-##
-##主要参数
+
+#主要参数
   private:
 	//窗口大小
 	int window_height;
@@ -28,7 +28,7 @@ Matlab的plot函数非常的强大，进行数据显示的效果非常的好，�
 
 	//边界大小
 	int border_size;
-##常用函数
+#常用函数
 	//分别加上几种数据类型，你可以尝试改为C++的泛型设计
 	void plot(int *x, int *y, size_t Cnt, CvScalar color);
 	void plot(float *x, float *y, size_t Cnt, CvScalar color);
@@ -43,8 +43,9 @@ Matlab的plot函数非常的强大，进行数据显示的效果非常的好，�
 
 	//添加title
 	void title(string title_name);
-##实现
+#实现
 到项目主页上Plot.cpp中有完整的代码实现
+改为发范型设计后，实现部分的代码也在plot.h文件中
 [https://github.com/libing64/CPlot](https://github.com/libing64/CPlot "CPlot-github")
 ##范例
 	#include "cv.h"
@@ -114,10 +115,10 @@ Matlab的plot函数非常的强大，进行数据显示的效果非常的好，�
 		return 0;
 	}
 
-##显示效果
+#显示效果
 ![](https://github.com/libing64/CPlot/blob/master/plot.jpg)
 
-##如何自己优化
+#如何自己优化
 
 如果感觉这些代码并不够优，你可以自己去优化它
 
@@ -133,5 +134,5 @@ Matlab的plot函数非常的强大，进行数据显示的效果非常的好，�
 
 [CPlot](https://github.com/libing64/CPlot)
 
-##TODO##
+#TODO#
 不同形式的显示，如点、圆、直线、虚线等
