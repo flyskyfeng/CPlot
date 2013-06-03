@@ -1,5 +1,6 @@
-// Matlab style plot functions for OpenCV by Changbo (zoccob@gmail).
-
+// Matlab style plot functions for OpenCV
+//author libing64
+//https://github.com/libing64/CPlot
 #include "cv.h"
 #include "highgui.h"
 #include "plot.h"

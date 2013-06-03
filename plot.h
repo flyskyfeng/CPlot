@@ -65,8 +65,8 @@ class Plot
 };
 
 
-
-
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 //采用范型设计，因此将实现部分和声明部分放在一个文件中
 Plot::Plot()
 {
@@ -103,7 +103,7 @@ void Plot::plot(T *X, T *Y, size_t Cnt, CvScalar color, char lineType)
 	this->dataset.push_back(data);
 	this->lineTypeSet.push_back(lineType);
 	
-	printf("data count:%d\n", this->dataset.size());
+	//printf("data count:%d\n", this->dataset.size());
 	
 	this->DrawData(this->Figure);
 }
@@ -123,7 +123,7 @@ void Plot::plot(IplImage* image, T *Y, size_t Cnt, CvScalar color, char lineType
 	}
 	this->dataset.push_back(data);
 	this->lineTypeSet.push_back(lineType);
-	printf("data count:%d\n", this->dataset.size());
+	//printf("data count:%d\n", this->dataset.size());
 	this->DrawData(this->Figure);
 }
 
@@ -244,7 +244,7 @@ void Plot::DrawData (IplImage *image)
 	memset(image->imageData, 255, sizeof(unsigned char)*Figure->widthStep*Figure->height);
 	this->DrawAxis(image);
 	
-	printf("x_range: %f y_range: %f\n", x_range, y_range);
+	//printf("x_range: %f y_range: %f\n", x_range, y_range);
 	//绘制点
 	double tempX, tempY;
 	CvPoint prev_point, current_point;
@@ -252,7 +252,7 @@ void Plot::DrawData (IplImage *image)
 	int slope_radius = (int)(radius*1.414/2 + 0.5);
 	for(size_t i = 0; i < this->dataset.size(); i++)
 	{
-		printf("dataset[i].size(): %d\n", dataset[i].size());	
+		//printf("dataset[i].size(): %d\n", dataset[i].size());	
 		for(size_t j = 0; j < this->dataset[i].size(); j++)
 		{
 			tempX = (int)((this->dataset[i][j].x - this->x_min)*this->x_scale);
