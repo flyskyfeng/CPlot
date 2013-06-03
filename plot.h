@@ -15,12 +15,12 @@ class Plot
 	private:	
 	void DrawAxis (IplImage *image);
 	void DrawData (IplImage *image);
-	void DrawData (IplImage *image, char shape);
 	int window_height;
 	int window_width;
 
 
 	vector< vector<CvPoint2D64f> >dataset;	
+	vector<char> lineTypeSet;
 	
 	//color
 	CvScalar backgroud_color;
@@ -48,26 +48,11 @@ class Plot
 	//边界大小
 	int border_size;
 		
-	//显示范围
-	void plot(IplImage* image, int *x, size_t Cnt, CvScalar color);
-	
-//	void plot(int *x, int *y, size_t Cnt, CvScalar color);
-//	void plot(float *x, float *y, size_t Cnt, CvScalar color);
-//	void plot(double *x, double *y, size_t Cnt, CvScalar color);
-
 	template<class T>
-	void plot(T *x, T *y, size_t Cnt, CvScalar color);
-	
-	
-	//l Line
-	//r rectange 
-	//c circle 
-	//p point
+	void plot(IplImage* image, T *y, size_t Cnt, CvScalar color, char lineType='l');	
 	template<class T>
-	void plot(T *x, T *y, size_t Cnt, CvScalar color, char shape);
-	
-	
-	
+	void plot(T *x, T *y, size_t Cnt, CvScalar color, char lineType='l');
+		
 	void xlabel(string xlabel_name, CvScalar label_color);
 	void ylabel(string ylabel_name, CvScalar label_color);
 	//清空图片上的数据
@@ -81,7 +66,7 @@ class Plot
 
 
 
-//implement
+
 //采用范型设计，因此将实现部分和声明部分放在一个文件中
 Plot::Plot()
 {
@@ -101,50 +86,10 @@ Plot::~Plot()
 {
 
 }
-//void Plot::plot(int *X, int *Y, size_t Cnt, CvScalar color)
-//{
-//		//对数据进行存储
-//	vector<CvPoint2D64f>data;
-//	for(int i = 0; i < Cnt;i++)
-//	{
-//		data.push_back(cvPoint2D64f((double)X[i], (double)Y[i]));
-//	}
-//	this->dataset.push_back(data);
-//	printf("data count:%d\n", this->dataset.size());
-//	this->DrawData(this->Figure);
-//}
-
-//void Plot::plot(float *X, float *Y, size_t Cnt, CvScalar color)
-//{
-//	//对数据进行存储
-//	vector<CvPoint2D64f>data;
-//	for(int i = 0; i < Cnt;i++)
-//	{
-//		data.push_back(cvPoint2D64f((double)X[i], (double)Y[i]));
-//	}
-//	this->dataset.push_back(data);
-//	printf("data count:%d\n", this->dataset.size());
-//	this->DrawData(this->Figure);
-//}
-
-//void Plot::plot(double *X, double *Y, size_t Cnt, CvScalar color)
-//{
-//	//对数据进行存储
-//	vector<CvPoint2D64f>data;
-//	for(int i = 0; i < Cnt;i++)
-//	{
-//		data.push_back(cvPoint2D64f(X[i], Y[i]));
-//	}
-//	this->dataset.push_back(data);
-//	printf("data count:%d\n", this->dataset.size());
-//	this->DrawData(this->Figure);
-//		
-//}
-
 
 //范型设计
 template<class T>
-void Plot::plot(T *X, T *Y, size_t Cnt, CvScalar color)
+void Plot::plot(T *X, T *Y, size_t Cnt, CvScalar color, char lineType)
 {
 	//对数据进行存储
 	T tempX, tempY;
@@ -153,30 +98,32 @@ void Plot::plot(T *X, T *Y, size_t Cnt, CvScalar color)
 	{
 		tempX = X[i];
 		tempY = Y[i];
-//		data.push_back(cvPoint2D64f((double)X[i], (double)Y[i]));
 		data.push_back(cvPoint2D64f((double)tempX, (double)tempY));
 	}
 	this->dataset.push_back(data);
+	this->lineTypeSet.push_back(lineType);
+	
 	printf("data count:%d\n", this->dataset.size());
+	
 	this->DrawData(this->Figure);
 }
 
-//范型设计
+//TODO
 template<class T>
-void Plot::plot(T *X, T *Y, size_t Cnt, CvScalar color, char shape)
+void Plot::plot(IplImage* image, T *Y, size_t Cnt, CvScalar color, char lineType)
 {
 	//对数据进行存储
 	T tempX, tempY;
 	vector<CvPoint2D64f>data;
 	for(int i = 0; i < Cnt;i++)
 	{
-		tempX = X[i];
+		tempX = i;
 		tempY = Y[i];
 		data.push_back(cvPoint2D64f((double)tempX, (double)tempY));
 	}
 	this->dataset.push_back(data);
+	this->lineTypeSet.push_back(lineType);
 	printf("data count:%d\n", this->dataset.size());
-	
 	this->DrawData(this->Figure);
 }
 
@@ -185,23 +132,11 @@ void Plot::clear()
 	this->dataset.clear();
 	//memset(Figure->imageData, 255, sizeof(unsigned char)*Figure->widthStep*Figure->height);
 }
-
-//TODO
-void Plot::plot(IplImage* image, int *x, size_t Cnt, CvScalar color)
-{
-	
-}
-
-
 void Plot::DrawAxis (IplImage *image)
 {
-	
-	//TODO 临时颜色
-//	CvScalar axis_color = CV_RGB(0,0,0);
-//	CvScalar text_color = CV_RGB(0,0,0);
 
 	CvScalar axis_color = this->axis_color;
-	CvScalar text_color = this->text_color;
+	CvScalar text_color = this->axis_color;
 	
 	int bs = this->border_size;		
 	int h = this->window_height;
@@ -261,6 +196,17 @@ void Plot::DrawAxis (IplImage *image)
 		      &font, text_color);
 }
 
+//添加对线型的支持
+//TODO线型未补充完整
+//标记		线型
+//l          直线	
+//*          星 
+//.          点 
+//o          圈 
+//x          叉 
+//+          十字 
+//s          方块 
+//d          菱形 
 void Plot::DrawData (IplImage *image)
 {
 	this->x_min = this->x_max = this->dataset[0][0].x;
@@ -296,28 +242,63 @@ void Plot::DrawData (IplImage *image)
 	
 	//清屏
 	memset(image->imageData, 255, sizeof(unsigned char)*Figure->widthStep*Figure->height);
-	//绘制坐标系 TODO如果需要绘制多做数据时，此处需要修改
 	this->DrawAxis(image);
 	
 	printf("x_range: %f y_range: %f\n", x_range, y_range);
 	//绘制点
 	double tempX, tempY;
-	CvPoint prev_point, next_point;
+	CvPoint prev_point, current_point;
+	int radius = 3;
+	int slope_radius = (int)(radius*1.414/2 + 0.5);
 	for(size_t i = 0; i < this->dataset.size(); i++)
 	{
-		printf("dataset[i].size(): %d\n", dataset[i].size());
+		printf("dataset[i].size(): %d\n", dataset[i].size());	
 		for(size_t j = 0; j < this->dataset[i].size(); j++)
 		{
 			tempX = (int)((this->dataset[i][j].x - this->x_min)*this->x_scale);
 			tempY = (int)((this->dataset[i][j].y - this->y_min)*this->y_scale);
-			next_point = cvPoint(bs + tempX, image->height - (tempY + bs));
-	//		cvCircle(image, next_point, 1,CV_RGB(255,0,0),1,CV_AA);		
-			// draw a line between two points
-			if (j >= 1)
+			current_point = cvPoint(bs + tempX, image->height - (tempY + bs));
+			
+			if(this->lineTypeSet[i] == 'l')
 			{
-				cvLine(image, prev_point, next_point, CV_RGB(255,0,0), 1, CV_AA);
-			}		
-			prev_point = next_point;
+				// draw a line between two points
+				if (j >= 1)
+				{
+					cvLine(image, prev_point, current_point, CV_RGB(255,0,0), 1, CV_AA);
+				}		
+				prev_point = current_point;
+			}else if(this->lineTypeSet[i] == '.')
+			{
+				cvCircle(image, current_point, 1, this->text_color, -1, 8);
+			}else if(this->lineTypeSet[i] == '*')
+			{
+				
+			}else if(this->lineTypeSet[i] == 'o')
+			{
+				cvCircle(image, current_point, radius, this->text_color, 1, CV_AA);
+			}else if(this->lineTypeSet[i] == 'x')
+			{
+				cvLine(image, cvPoint(current_point.x - slope_radius, current_point.y - slope_radius), 
+					   cvPoint(current_point.x + slope_radius, current_point.y + slope_radius), CV_RGB(255,0,0), 1, 8);
+					   
+				cvLine(image, cvPoint(current_point.x - slope_radius, current_point.y + slope_radius), 
+					   cvPoint(current_point.x + slope_radius, current_point.y - slope_radius), CV_RGB(255,0,0), 1, 8);
+			}else if(this->lineTypeSet[i] == '+')
+			{
+				cvLine(image, cvPoint(current_point.x - radius, current_point.y), 
+					   cvPoint(current_point.x + radius, current_point.y), CV_RGB(255,0,0), 1, 8);
+					   
+				cvLine(image, cvPoint(current_point.x, current_point.y - radius), 
+					   cvPoint(current_point.x, current_point.y + radius), CV_RGB(255,0,0), 1, 8);	   
+			}else if(this->lineTypeSet[i] == 's')
+			{
+				cvRectangle(image, cvPoint(current_point.x - slope_radius, current_point.y - slope_radius), 
+					   cvPoint(current_point.x + slope_radius, current_point.y + slope_radius), CV_RGB(255,0,0), 1, 8);
+			}else if(this->lineTypeSet[i] == 'd')
+			{
+		
+			}
+				
 		}
 	}	
 }

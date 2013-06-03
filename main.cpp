@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {
-	const int Cnt = 100;
+	const int Cnt = 80;
 	double X[Cnt] = {0};
 	double Y[Cnt] = {0};
 	for(int i = 0; i < Cnt; i++)
@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	cvNamedWindow("hello",1);
 	Plot plot;
 	CvScalar color = CV_RGB(255, 0, 0);
-	plot.plot(X, Y, Cnt, color);
+	plot.plot(X, Y, Cnt, color, 's');
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	//plot.clear();
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 		X[i] = (double)i;
 		Y[i] = (double)(5*i - 20);
 	}
-	plot.plot(X, Y, Cnt, color);
+	plot.plot(X, Y, Cnt, color, '.');
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 		X[i] = (double)i;
 		Y[i] = (double)(-5*i - 20);
 	}
-	plot.plot(X, Y, Cnt, color);
+	plot.plot(X, Y, Cnt, color, '+');
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	
@@ -50,7 +50,16 @@ int main(int argc, char* argv[])
 		X[i] = (double)i;
 		Y[i] = (double)(50*sin(i*0.1));
 	}
-	plot.plot(X, Y, Cnt, color);
+	plot.plot(X, Y, Cnt, color, 'x');
+	cvShowImage("hello", plot.Figure);
+	cvWaitKey(0);
+	
+	for(int i = 0; i < Cnt; i++)
+	{
+		X[i] = (double)i;
+		Y[i] = (double)(100*sin(i*0.1));
+	}
+	plot.plot(X, Y, Cnt, color, 'o');
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
 	
@@ -59,13 +68,12 @@ int main(int argc, char* argv[])
 	for(int i = 0; i < Cnt; i++)
 	{
 		X2[i] = i;
-		Y2[i] = -100*i - 20;
+		Y2[i] = -30*i - 20;
 	}
-	plot.clear();
 	plot.plot(X2, Y2, Cnt/2, color);
 	cvShowImage("hello", plot.Figure);
 	cvWaitKey(0);
-	
+	//cvSaveImage("example.jpg", plot.Figure);
 	return 0;
 }
 
